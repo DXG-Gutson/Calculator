@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM Calculator</title>
+    <style>
+        .calculator {
+            display: flex;
+            flex-direction: column;
+            width: 400px;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        .calculator-screen {
+            width: 93%;
+            height: 50px;
+            background-color: #ddd;
+            text-align: right;
+            font-size: 24px;
+            padding: 10px;
+            border: none;
+            border-radius: 3px;
+        }
+
+        .calculator-keys {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .calculator-key {
+            width: 21%;
+            height: 50px;
+            margin: 8px;
+            text-align: center;
+            font-size: 18px;
+            background-color: #eee;
+            border: none;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <input type="text" class="calculator-screen" id="display" value="">
+        <div class="calculator-keys">
+            <button class="calculator-key" onclick="clearScreen()">C</button>
+            <button class="calculator-key" onclick="deleteNumber()">DEL</button>
+            <button class="calculator-key" onclick="appendNumber('.')">.</button>
+            <button class="calculator-key" onclick="appendOperator('*')">x</button>
+            <button class="calculator-key" onclick="appendNumber('7')">7</button>
+            <button class="calculator-key" onclick="appendNumber('8')">8</button>
+            <button class="calculator-key" onclick="appendNumber('9')">9</button>
+            <button class="calculator-key" onclick="appendOperator('/')">/</button>
+            <button class="calculator-key" onclick="appendNumber('4')">4</button>
+            <button class="calculator-key" onclick="appendNumber('5')">5</button>
+            <button class="calculator-key" onclick="appendNumber('6')">6</button>
+            <button class="calculator-key" onclick="appendOperator('-')">-</button>
+            <button class="calculator-key" onclick="appendNumber('1')">1</button>
+            <button class="calculator-key" onclick="appendNumber('2')">2</button>
+            <button class="calculator-key" onclick="appendNumber('3')">3</button>
+            <button class="calculator-key" onclick="appendOperator('+')">+</button>
+            <button class="calculator-key" onclick="appendNumber('0')">0</button>
+            <button class="calculator-key" onclick="appendnUMBER('00')">00</button>
+            <button class="calculator-key" onclick="calculate()"style="height:50px; width: 183px">=</button>
+        </div>
+    </div>
+    <script>
+        const display = document.getElementById('display');
+        let expression = '';
+
+        function appendNumber(number) {
+            expression += number;
+            display.value = expression;
+        }
+
+        function appendOperator(operator) {
+            if (expression.length === 0 || isOperator(expression[expression.length - 1])) {
+                return;
+            }
+            expression += operator;
+            display.value = expression;
+        }
+
+        function clearScreen() {
+            expression = '';
+            display.value = expression;
+        }
+
+        function deleteNumber() {
+            expression = expression.slice(0, expression.length - 1);
+            display.value = expression;
+        }
+
+        function calculate() {
+            try {
+                let result = eval(expression);
+                expression = result.toString();
+                display.value = expression;
+            } catch (error) {
+                alert('Invalid expression');
+                expression = '';
+                display.value = expression;
+            }
+        }
+
+        function isOperator(char) {
+            return char === '+' || char === '-' || char === '*' || char === '/';
+        }
+    </script>
+</body>
+</html>
